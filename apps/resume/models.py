@@ -6,7 +6,9 @@ from apps.shared.models import BaseEntity, PersonalShowcaseUser
 
 class Skill(BaseEntity):
     name = models.CharField(max_length=50, verbose_name='Nome')
-    proficiency = models.IntegerField(verbose_name='Nível de Proficiência',
+    proficiency = models.DecimalField(verbose_name='Nível de Proficiência',
+                                      decimal_places=2,
+                                      max_digits=3,
                                       default=1,
                                       validators=[
                                           MaxValueValidator(10),
@@ -97,5 +99,5 @@ class Resume(BaseEntity):
     tech_skills = models.ManyToManyField(to=TechSkill)
     programming_languages = models.ManyToManyField(to=ProgrammingLanguage)
     languages = models.ManyToManyField(to=Language)
-    work_experiences = models.ManyToManyField(to=WorkExperience)
+    work_experiences = models.ManyToManyField(to=WorkExperience, blank=True)
     user = models.ForeignKey(to=PersonalShowcaseUser, on_delete=models.CASCADE, default=None)
