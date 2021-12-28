@@ -26,8 +26,7 @@ SECRET_KEY = 'django-insecure-^5hoywb5g(qh$r@iwd45cty&jbrf&od24(x_+aco%l$brf%kq9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://localhost:3000', 'http://localhost', 'localhost', 'https://showcase-resume.vercel.app',
-                 'showcase-resume.vercel.app']
+ALLOWED_HOSTS = ['http://localhost:3000', 'http://localhost', 'localhost', ]
 
 # Application definition
 
@@ -65,6 +64,8 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://showcase-resume.vercel.app',
+    'showcase-resume.vercel.app'
 ]
 
 ROOT_URLCONF = 'personal_showcase.urls'
@@ -142,13 +143,5 @@ AUTH_USER_MODEL = 'shared.PersonalShowcaseUser'
 django_heroku.settings(locals())
 
 CORS_ALLOW_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
+    '*'
 ]
