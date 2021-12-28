@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-^5hoywb5g(qh$r@iwd45cty&jbrf&od24(x_+aco%l$brf%kq9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://localhost:3000', 'http://localhost', 'localhost', 'https://showcase-resume.vercel.app']
+ALLOWED_HOSTS = ['http://localhost:3000', 'http://localhost', 'localhost', 'https://showcase-resume.vercel.app',
+                 'showcase-resume.vercel.app']
 
 # Application definition
 
