@@ -5,13 +5,12 @@ from apps.shared.models import BaseEntity, PersonalShowcaseUser
 
 
 class Skill(BaseEntity):
+    user = models.ForeignKey(PersonalShowcaseUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name='Nome')
-    proficiency = models.DecimalField(verbose_name='Nível de Proficiência',
-                                      decimal_places=2,
-                                      max_digits=3,
+    proficiency = models.IntegerField(verbose_name='Nível de Proficiência',
                                       default=1,
                                       validators=[
-                                          MaxValueValidator(10),
+                                          MaxValueValidator(100),
                                           MinValueValidator(1)
                                       ])
 
@@ -25,6 +24,8 @@ class Skill(BaseEntity):
 
 
 class Language(Skill):
+    user = models.ForeignKey(PersonalShowcaseUser, on_delete=models.CASCADE)
+
     def get_repr(self) -> str:
         return 'Idioma ' + self.name + ' criado com sucesso!'
 
@@ -34,6 +35,8 @@ class Language(Skill):
 
 
 class ProgrammingLanguage(Skill):
+    user = models.ForeignKey(PersonalShowcaseUser, on_delete=models.CASCADE)
+
     def get_repr(self) -> str:
         return 'Linguagem de Programação ' + self.name + ' criada com sucesso!'
 
@@ -43,6 +46,8 @@ class ProgrammingLanguage(Skill):
 
 
 class TechSkill(Skill):
+    user = models.ForeignKey(PersonalShowcaseUser, on_delete=models.CASCADE)
+
     def get_repr(self) -> str:
         return 'Habilidade Técnica ' + self.name + ' criada com sucesso!'
 
@@ -52,6 +57,7 @@ class TechSkill(Skill):
 
 
 class SoftSkill(Skill):
+    user = models.ForeignKey(PersonalShowcaseUser, on_delete=models.CASCADE)
 
     def get_repr(self) -> str:
         return 'Habilidade Leve' + self.name + ' criada com sucesso!'
@@ -62,6 +68,7 @@ class SoftSkill(Skill):
 
 
 class WorkExperience(BaseEntity):
+    user = models.ForeignKey(PersonalShowcaseUser, on_delete=models.CASCADE)
     role = models.CharField(max_length=100, verbose_name='Cargo')
     company = models.CharField(max_length=100, verbose_name='Empresa')
     start_date = models.DateTimeField(
@@ -82,6 +89,7 @@ class WorkExperience(BaseEntity):
 
 
 class RoleActivity(BaseEntity):
+    user = models.ForeignKey(PersonalShowcaseUser, on_delete=models.CASCADE)
     description = models.TextField(verbose_name='Atividade Exercida')
     work_experience = models.ForeignKey(
         WorkExperience, on_delete=models.CASCADE)
@@ -100,4 +108,11 @@ class Resume(BaseEntity):
     programming_languages = models.ManyToManyField(to=ProgrammingLanguage)
     languages = models.ManyToManyField(to=Language)
     work_experiences = models.ManyToManyField(to=WorkExperience, blank=True)
-    user = models.ForeignKey(to=PersonalShowcaseUser, on_delete=models.CASCADE, default=None)
+    user = models.OneToOneField(to=PersonalShowcaseUser, on_delete=models.CASCADE, default=None)
+
+    def __str__(self) -> str:
+        return self.user.first_name + '\'s Resume'
+
+    class Meta:
+        verbose_name = 'Resume'
+        verbose_name_plural = 'Resumes'

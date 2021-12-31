@@ -47,6 +47,7 @@ PROJECT_APPS = [
     'apps.portfolio',
     'apps.resume',
     'apps.shared',
+    'apps.website'
 ]
 
 INSTALLED_APPS += PROJECT_APPS
@@ -65,7 +66,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://showcase-resume.vercel.app',
-    'showcase-resume.vercel.app'
+
 ]
 
 ROOT_URLCONF = 'personal_showcase.urls'
@@ -132,6 +133,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
