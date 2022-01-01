@@ -1,71 +1,33 @@
 from django.contrib import admin
 
-from .models import Language, ProgrammingLanguage, SoftSkill, TechSkill, WorkExperience, RoleActivity, Resume
-
-
+from .models import Language, ProgrammingLanguage, SoftSkill, TechSkill, Resume
 # Register your models here.
+from ..shared.admin import BaseEntityModelAdmin, BaseEntityInline
 
 
-class ResumeBaseEntity(admin.ModelAdmin):
-    def get_queryset(self, request):
-        qs = super(ResumeBaseEntity, self).get_queryset(request)
-        print(request.user.id)
-
-        return qs.filter(user=request.user)
-
-    def get_changeform_initial_data(self, request):
-        return {'user': request.user}
-
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        super(ResumeBaseEntity, self).save_model(request, obj, form, change)
-
-    readonly_fields = ['user']
-
-    class Meta:
-        abstract = True
+class LanguageInline(BaseEntityInline):
+    model = Language
 
 
-@admin.register(Language)
-class LanguageAdmin(ResumeBaseEntity):
-    pass
+class TechSkillInline(BaseEntityInline):
+    model = TechSkill
 
 
-@admin.register(ProgrammingLanguage)
-class ProgrammingLanguageAdmin(ResumeBaseEntity):
-    pass
+class SoftSkillsInline(BaseEntityInline):
+    model = SoftSkill
 
 
-@admin.register(SoftSkill)
-class SoftSkillAdmin(ResumeBaseEntity):
-    pass
-
-
-@admin.register(TechSkill)
-class TechSkillAdmin(ResumeBaseEntity):
-    pass
-
-
-@admin.register(WorkExperience)
-class WorkExperienceAdmin(ResumeBaseEntity):
-    pass
-
-
-@admin.register(RoleActivity)
-class RoleActivityAdmin(ResumeBaseEntity):
-    pass
+class ProgrammingLanguageInline(BaseEntityInline):
+    model = ProgrammingLanguage
 
 
 @admin.register(Resume)
-class ResumeAdmin(ResumeBaseEntity):
+class ResumeAdmin(BaseEntityModelAdmin):
+    inlines = [LanguageInline, TechSkillInline, SoftSkillsInline, ProgrammingLanguageInline]
 
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == "languages":
-            kwargs["queryset"] = Language.objects.filter(user=request.user)
-        if db_field.name == "tech_skills":
-            kwargs["queryset"] = TechSkill.objects.filter(user=request.user)
-        if db_field.name == "soft_skills":
-            kwargs["queryset"] = SoftSkill.objects.filter(user=request.user)
-        if db_field.name == "programming_languages":
-            kwargs["queryset"] = ProgrammingLanguage.objects.filter(user=request.user)
-        return super(ResumeAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save(commit=False)
+        for instance in instances:
+            instance.created_by = request.user
+            instance.save()
+        formset.save_m2m()

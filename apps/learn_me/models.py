@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.shared.models import BaseEntity
+from apps.shared.models import BaseEntity, PersonalShowcaseUser
 
 
 class Subject(BaseEntity):

@@ -9,34 +9,34 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('learn_me', '0001_initial'),
         ('shared', '0001_initial'),
-        ('portfolio', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='service',
+            model_name='topic',
             name='created_by',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shared.personalshowcaseuser', verbose_name='Usuário'),
         ),
         migrations.AddField(
-            model_name='project',
+            model_name='topic',
+            name='subject',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='learn_me.subject'),
+        ),
+        migrations.AddField(
+            model_name='subject',
             name='created_by',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shared.personalshowcaseuser', verbose_name='Usuário'),
         ),
         migrations.AddField(
-            model_name='project',
-            name='service',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='portfolio.service'),
-        ),
-        migrations.AddField(
-            model_name='portfolio',
+            model_name='step',
             name='created_by',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shared.personalshowcaseuser', verbose_name='Usuário'),
         ),
         migrations.AddField(
-            model_name='portfolio',
-            name='projects',
-            field=models.ManyToManyField(to='portfolio.Project', verbose_name='Projetos'),
+            model_name='step',
+            name='topic',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='learn_me.topic', verbose_name='Tópico'),
         ),
     ]

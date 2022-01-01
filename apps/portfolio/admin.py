@@ -1,18 +1,13 @@
 from django.contrib import admin
 
-from .models import Project, Portfolio, Service
+from .models import Project, Portfolio
+from ..shared.admin import BaseEntityModelAdmin, BaseEntityInline
 
 
-@admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
-    pass
+class ProjectAdmin(BaseEntityInline):
+    model = Project
 
 
 @admin.register(Portfolio)
-class PortfolioAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
-    pass
+class PortfolioAdmin(BaseEntityModelAdmin):
+    inlines = [ProjectAdmin]

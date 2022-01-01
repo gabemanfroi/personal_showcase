@@ -7,10 +7,10 @@ from .serializers import WebsiteContentSerializer
 class WebsiteContentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
-        username = self.kwargs['username'].split('-')
-        queryset = WebsiteContent.objects.filter(user__first_name=username[0].capitalize(),
-                                                 user__last_name=username[1].capitalize())
+        personal_url = self.kwargs['personal_url']
+        queryset = WebsiteContent.objects.filter(personal_url=personal_url)
         return queryset
 
     queryset = WebsiteContent.objects.all()
     serializer_class = WebsiteContentSerializer
+

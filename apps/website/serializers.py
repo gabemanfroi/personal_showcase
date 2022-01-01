@@ -14,10 +14,10 @@ class CarrouselItemSerializer(serializers.ModelSerializer):
 
 class WebsiteContentSerializer(serializers.ModelSerializer):
     resume = ResumeSerializer()
-    user = PersonalShowcaseUserSerializer()
+    created_by = PersonalShowcaseUserSerializer()
     carrousel_items = CarrouselItemSerializer(many=True)
     portfolio = PortfolioSerializer()
 
     class Meta:
         model = WebsiteContent
-        fields = '__all__'
+        fields = ['resume', 'portfolio', 'background_image', 'carrousel_items', 'created_by']
