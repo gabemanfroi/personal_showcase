@@ -16,3 +16,10 @@ class ProjectAdmin(BaseEntityInline):
 @admin.register(Portfolio)
 class PortfolioAdmin(BaseEntityModelAdmin):
     inlines = [ProjectAdmin]
+
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save(commit=False)
+        for instance in instances:
+            instance.created_by = request.user
+            instance.save()
+        formset.save_m2m()
