@@ -30,5 +30,5 @@ class WebsiteContentAdmin(BaseEntityModelAdmin):
         formset.save_m2m()
 
     inlines = [CarrouselItemInline]
-    fields = ['resume', 'portfolio', 'personal_url', 'background_image']
+    fields = ['resume', 'portfolio', 'personal_url', 'background_image', 'blog']
     pass
