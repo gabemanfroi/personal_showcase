@@ -1,5 +1,6 @@
 from django.db import models
 
+from apps.blog.models import Blog
 from apps.portfolio.models import Portfolio
 from apps.resume.models import Resume
 from apps.shared.models import BaseEntity, PersonalShowcaseUser
@@ -8,6 +9,7 @@ from apps.shared.models import BaseEntity, PersonalShowcaseUser
 class WebsiteContent(BaseEntity):
     resume = models.OneToOneField(Resume, on_delete=models.CASCADE, verbose_name='Resume')
     portfolio = models.OneToOneField(Portfolio, on_delete=models.CASCADE, verbose_name='Portfolio', null=True)
+    blog = models.OneToOneField(Blog, on_delete=models.CASCADE, verbose_name='Blog')
     personal_url = models.CharField(max_length=50, verbose_name='Url pessoal', unique=True)
     background_image = models.ImageField(verbose_name='Imagem do Banner', null=True, blank=True)
 

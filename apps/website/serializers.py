@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from apps.blog.serializers import BlogSerializer
 from apps.portfolio.serializers import PortfolioSerializer
 from apps.resume.serializers import ResumeSerializer
 from apps.shared.serializers import PersonalShowcaseUserSerializer
@@ -17,7 +18,8 @@ class WebsiteContentSerializer(serializers.ModelSerializer):
     created_by = PersonalShowcaseUserSerializer()
     carrousel_items = CarrouselItemSerializer(many=True)
     portfolio = PortfolioSerializer()
+    blog = BlogSerializer()
 
     class Meta:
         model = WebsiteContent
-        fields = ['resume', 'portfolio', 'background_image', 'carrousel_items', 'created_by']
+        fields = ['resume', 'portfolio', 'background_image', 'carrousel_items', 'created_by', 'blog']
