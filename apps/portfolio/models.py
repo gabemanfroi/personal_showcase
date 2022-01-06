@@ -32,6 +32,7 @@ class Project(BaseEntity):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE, verbose_name='Portfolio',
                                   related_name='projects')
+    end_date = models.DateField(verbose_name='Data de Finalização', null=True, blank=True)
 
     def __str__(self) -> str:
         return self.title
