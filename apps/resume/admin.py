@@ -1,8 +1,9 @@
 from django.contrib import admin
 
-from .models import Language, ProgrammingLanguage, SoftSkill, TechSkill, Resume
+from .models import Language, ProgrammingLanguage, SoftSkill, TechSkill, Resume, CustomSkillCategorySkill, \
+    CustomSkillCategory
 # Register your models here.
-from ..shared.admin import BaseEntityModelAdmin, BaseEntityInline
+from ..shared.admin import BaseEntityInline, BaseEntityModelAdmin
 
 
 class LanguageInline(BaseEntityInline):
@@ -21,9 +22,34 @@ class ProgrammingLanguageInline(BaseEntityInline):
     model = ProgrammingLanguage
 
 
+class CustomSkillCategorySkillInline(BaseEntityInline):
+    model = CustomSkillCategorySkill
+
+
+class CustomSkillCategoryInline(BaseEntityInline):
+    model = CustomSkillCategory
+
+    exclude = ['created_by']
+    verbose_name = 'Categoria de Habilidades Personalizada (Adicione Habilidades Utilizando o Menu Ao lado)'
+    verbose_name_plural = 'Categorias de Habilidades Personalizadas (Adicione Habilidades Utilizando o Menu Ao lado)'
+
+
+@admin.register(CustomSkillCategory)
+class CustomSkillCategoryAdmin(BaseEntityModelAdmin):
+    model = CustomSkillCategory
+    inlines = [CustomSkillCategorySkillInline]
+
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save(commit=False)
+        for instance in instances:
+            instance.created_by = request.user
+            instance.save()
+        formset.save_m2m()
+
+
 @admin.register(Resume)
 class ResumeAdmin(BaseEntityModelAdmin):
-    inlines = [LanguageInline, TechSkillInline, SoftSkillsInline, ProgrammingLanguageInline]
+    inlines = [LanguageInline, TechSkillInline, SoftSkillsInline, ProgrammingLanguageInline, CustomSkillCategoryInline]
 
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)

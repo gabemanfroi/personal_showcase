@@ -108,3 +108,34 @@ class SoftSkill(Skill):
     class Meta:
         verbose_name = 'Habilidade Leve'
         verbose_name_plural = 'Habilidades Leves'
+
+
+class CustomSkillCategory(BaseEntity):
+    class SkillStyle(models.TextChoices):
+        CIRCULAR = 'Circular'
+        LINEAR = 'Linear'
+        CHECK_MARK = 'Check Mark'
+
+    style = models.CharField(max_length=20, choices=SkillStyle.choices, default=SkillStyle.CHECK_MARK,
+                             verbose_name='Estilo')
+    name = models.CharField(max_length=50, verbose_name='Nome da Categoria')
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Resume',
+                               related_name='custom_skill_categories')
+    use_on_resume = models.BooleanField(default=True, verbose_name='Utilizar no Website?')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Categoria de Habilidades Personalizada'
+        verbose_name_plural = 'Categorias de Habilidades Personalizadas'
+
+
+class CustomSkillCategorySkill(Skill):
+    custom_skill_category = models.ForeignKey(CustomSkillCategory, on_delete=models.CASCADE,
+                                              verbose_name='Categoria de Habilidade Personalizada',
+                                              related_name='custom_skill_category_skills')
+
+    class Meta:
+        verbose_name = 'Habilidade da Categoria Personalizada'
+        verbose_name_plural = 'Habilidades da Categoria Personalizada'
