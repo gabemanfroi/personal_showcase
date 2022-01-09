@@ -15,16 +15,16 @@ class Resume(BaseEntity):
 
 class WorkExperience(BaseEntity):
     role = models.CharField(max_length=100, verbose_name='Cargo')
-    company = models.CharField(max_length=100, verbose_name='Empresa')
-    start_date = models.DateTimeField(
+    company_name = models.CharField(max_length=100, verbose_name='Empresa')
+    start_date = models.DateField(
         null=False, blank=False, verbose_name='Data de Início')
-    end_date = models.DateTimeField(
+    end_date = models.DateField(
         null=True, blank=True, verbose_name='Data de Encerramento')
     current = models.BooleanField(default=False)
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Resume')
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Resume', related_name='work_experiences')
 
     def __str__(self) -> str:
-        return self.role + ' - ' + self.company
+        return self.role + ' - ' + self.company_name
 
     def get_repr(self) -> str:
         return 'Experiência ' + self.name + ' criada com sucesso!'
@@ -32,6 +32,22 @@ class WorkExperience(BaseEntity):
     class Meta:
         verbose_name = 'Experiência'
         verbose_name_plural = 'Experiências'
+
+
+class EducationHistoryItem(BaseEntity):
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Resume',
+                               related_name='education_history_items')
+    institution_name = models.CharField(max_length=100, verbose_name='Instituição')
+    start_date = models.DateField(
+        null=False, blank=False, verbose_name='Data de Início')
+    end_date = models.DateField(
+        null=True, blank=True, verbose_name='Data de Encerramento')
+    graduation_name = models.CharField(max_length=75, verbose_name='Nome do Curso')
+    observation = models.CharField(max_length=100, verbose_name='Observações')
+
+    class Meta:
+        verbose_name = 'Item do Histórico Educacional'
+        verbose_name_plural = 'Itens do Histórico Educacional'
 
 
 class RoleActivity(BaseEntity):

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Language, ProgrammingLanguage, SoftSkill, TechSkill, Resume, CustomSkillCategorySkill, \
-    CustomSkillCategory
+    CustomSkillCategory, WorkExperience, EducationHistoryItem
 # Register your models here.
 from ..shared.admin import BaseEntityInline, BaseEntityModelAdmin
 
@@ -20,6 +20,14 @@ class SoftSkillsInline(BaseEntityInline):
 
 class ProgrammingLanguageInline(BaseEntityInline):
     model = ProgrammingLanguage
+
+
+class WorkExperienceInline(BaseEntityInline):
+    model = WorkExperience
+
+
+class EducationHistoryItemInline(BaseEntityInline):
+    model = EducationHistoryItem
 
 
 class CustomSkillCategorySkillInline(BaseEntityInline):
@@ -49,7 +57,15 @@ class CustomSkillCategoryAdmin(BaseEntityModelAdmin):
 
 @admin.register(Resume)
 class ResumeAdmin(BaseEntityModelAdmin):
-    inlines = [LanguageInline, TechSkillInline, SoftSkillsInline, ProgrammingLanguageInline, CustomSkillCategoryInline]
+    inlines = [
+        CustomSkillCategoryInline,
+        EducationHistoryItemInline,
+        LanguageInline,
+        ProgrammingLanguageInline,
+        SoftSkillsInline,
+        TechSkillInline,
+        WorkExperienceInline
+    ]
 
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
