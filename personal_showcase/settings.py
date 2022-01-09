@@ -55,9 +55,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://showcase-resume.vercel.app',
     'https://showcaseme.online',
-    'http://showcaseme.online'
-    'https://www.showcaseme.online/',
-    'http://www.showcaseme.online/'
+    'http://showcaseme.online',
+    'https://www.showcaseme.online',
+    'https://www.showcaseme.online'
 ]
 
 ROOT_URLCONF = 'personal_showcase.urls'
