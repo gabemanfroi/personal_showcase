@@ -54,7 +54,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://showcase-resume.vercel.app',
-
+    'https://showcaseme.online'
 ]
 
 ROOT_URLCONF = 'personal_showcase.urls'
