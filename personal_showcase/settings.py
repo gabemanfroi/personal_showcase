@@ -57,7 +57,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://showcaseme.online',
     'http://showcaseme.online',
     'https://www.showcaseme.online',
-    'https://www.showcaseme.online'
+    'http://www.showcaseme.online'
 ]
 
 ROOT_URLCONF = 'personal_showcase.urls'
