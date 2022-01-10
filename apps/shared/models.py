@@ -5,6 +5,7 @@ from django.db import models
 class PersonalShowcaseUser(AbstractUser):
     professional_title = models.CharField(max_length=255, verbose_name='Título Profissional')
     profile_picture = models.ImageField(verbose_name='Foto de Perfil', blank=True, null=True)
+    resume_file = models.FileField(verbose_name='Curriculum Vitae', blank=True, null=True)
 
     def get_repr(self) -> str:
         return 'Usuário criado com sucesso!'

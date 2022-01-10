@@ -21,5 +21,5 @@ class PersonalShowcaseUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = ['websites', 'first_name', 'last_name', 'professional_title', 'additional_information',
-                  'profile_picture']
+                  'profile_picture', 'resume_file']
         model = PersonalShowcaseUser
