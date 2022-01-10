@@ -5,13 +5,13 @@ from .models import PersonalShowcaseUser, Website, UserAdditionalInformation
 
 class WebsiteSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['category', 'url']
+        fields = ['id', 'category', 'url']
         model = Website
 
 
 class UserAdditionalInformationSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['title', 'description']
+        fields = ['id', 'title', 'description']
         model = UserAdditionalInformation
 
 
